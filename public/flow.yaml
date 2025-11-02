@@ -1,0 +1,235 @@
+title: Isolatiekeuze voor VvE's – Beslisboom
+description: Beslisboom voor isolatiekeuze bij VvE-verduurzaming
+startId: mijn-vve-wil-verduurzamen
+tooltips:
+  - term: spouw
+    explanation: De ruimte tussen de binnen- en buitenmuur, gebruikt voor isolatie
+  - term: dampdichte laag
+    explanation: Een laag die voorkomt dat vocht door de isolatie dringt, belangrijk om schimmel te voorkomen
+  - term: dampopen werken
+    explanation: Een bouwtechniek waarbij vocht kan worden afgevoerd door het materiaal, belangrijk bij houtvezel isolatie
+nodes:
+  - id: mijn-vve-wil-verduurzamen
+    question: ""
+    options:
+      - label: Mijn VvE wil verduurzamen
+        nextId: gevelisolatie-overwegen
+
+  - id: gevelisolatie-overwegen
+    title: Gevel isolatie
+    question: Ik denk aan gevelisolatie, wat nu?
+    options:
+      - label: Ga door
+        nextId: is-er-een-bruikbare-spouw
+
+  - id: is-er-een-bruikbare-spouw
+    title: Is er een bruikbare spouw?
+    question: Is er een bruikbare spouw?
+    note: "Een bruikbare spouw betekent: >50mm, Droog en schoon, Weinig onderbrekingen"
+    options:
+      - label: Ja
+        nextId: overweeg-spouwmuurisolatie
+      - label: Nee
+        nextId: overweeg-buitengevelisolatie
+
+  - id: overweeg-spouwmuurisolatie
+    title: Overweeg Spouwmuurisolatie
+    question: Overweeg Spouwmuurisolatie
+    options:
+      - label: Interessant, maar welke opties heb ik dan?
+        nextId: spouwmuurisolatie-opties
+
+  - id: spouwmuurisolatie-opties
+    title: Spouwmuurisolatie opties
+    question: Interessant, maar welke opties heb ik dan?
+    options:
+      - label: 1. Minerale wol
+        result: |
+          1. Minerale wol: Beste prijs-prestatie
+          
+          Minerale wol scoort in deze vergelijking het best. Het combineert een lage prijs met een goede isolatiewaarde, een gebruikelijke installatiemethode en een beperkte milieu-impact. Een ideale optie tussen prijs en kwaliteit.
+        card:
+          price: "€8,75/m²"
+          pros:
+            - "Goedkoop"
+            - "Goede isolatiewaarde"
+            - "Gebruikelijke installatiemethode"
+            - "Redelijke milieuscore"
+          description: "Minerale wol scoort in deze vergelijking het best. Het combineert een lage prijs met een goede isolatiewaarde, een gebruikelijke installatiemethode en een beperkte milieu-impact. Een ideale optie tussen prijs en kwaliteit."
+          biobasedAlternativeIndex: 2
+      - label: 2. EPS-parels
+        result: |
+          2. EPS-parels: Makkelijk te installeren
+          
+          EPS-parels zijn een goede optie met een makkelijke installatiewijze die de spouw homogeen vult. EPS-parels zijn minder milieuvriendelijk dan minerale wol of kurk. Een goede optie voor installatiegemak.
+        card:
+          price: "€12,75/m²"
+          pros:
+            - "Relatief goedkoop"
+            - "Zeer eenvoudige installatie"
+          cons:
+            - "Iets mindere isolatiewaarde"
+            - "Minder milieuvriendelijk materiaal"
+          description: "EPS-parels zijn een goede optie met een makkelijke installatiewijze die de spouw homogeen vult. EPS-parels zijn minder milieuvriendelijk dan minerale wol of kurk. Een goede optie voor installatiegemak."
+          biobasedAlternativeIndex: 2
+      - label: 3. Kurk korrels
+        result: |
+          3. Kurk korrels: Milieuvriendelijk
+          
+          Kurk is een ecologisch materiaal met goede eigenschappen, maar het is minder gangbaar, duurder en heeft een lagere isolatiewaarde dan gebruikelijke alternatieven. Een duurzaam alternatief, maar nog in ontwikkelfase.
+        card:
+          price: "€15,25/m²"
+          pros:
+            - "Zeer milieuvriendelijk"
+          cons:
+            - "Iets duurder (ondanks extra biobased subsidie)"
+            - "Iets mindere isolatiewaarde"
+            - "Arbeidsintensievere installatie"
+          description: "Kurk is een ecologisch materiaal met goede eigenschappen, maar het is minder gangbaar, duurder en heeft een lagere isolatiewaarde dan gebruikelijke alternatieven. Een duurzaam alternatief, maar nog in ontwikkelfase."
+
+  - id: overweeg-buitengevelisolatie
+    title: Overweeg buitengevelisolatie
+    question: Overweeg buitengevelisolatie
+    options:
+      - label: Vraag vergunning aan om gevelbeeld te wijzigen
+        nextId: vraag-vergunning-aan
+
+  - id: vraag-vergunning-aan
+    title: Vergunning aanvragen
+    question: Vraag vergunning aan om gevelbeeld te wijzigen
+    options:
+      - label: Verder
+        nextId: vve-bereid-meer-geld-uitgeven
+
+  - id: vve-bereid-meer-geld-uitgeven
+    title: Is de VvE bereid om meer geld uit te geven aan buitengevel onderhoud?
+    question: Is de VvE bereid om meer geld uit te geven aan buitengevel onderhoud?
+    note: "Onderhoud, schilderwerk en reiniging aan buitenafwerking elke 10/15 jaar"
+    options:
+      - label: Ja
+        nextId: buitenisolatie-opties
+      - label: Nee
+        nextId: overweeg-binnengevelisolatie
+
+  - id: buitenisolatie-opties
+    title: Buitenisolatie opties
+    question: Interessant, maar welke opties heb ik dan?
+    options:
+      - label: 1. Minerale wol
+        result: |
+          1. Minerale wol: Beste prijs-prestatie
+          
+          Minerale wol scoort in deze vergelijking het best. Het combineert een lage prijs met een goede isolatiewaarde, een gebruikelijke installatiemethode en een beperkte milieu-impact. Een ideale optie tussen prijs en kwaliteit.
+        card:
+          price: "€176,75/m²"
+          pros:
+            - "Goedkoop"
+            - "Goede isolatiewaarde"
+            - "Gebruikelijke installatiemethode"
+            - "Redelijke milieuscore"
+          description: "Minerale wol scoort in deze vergelijking het best. Het combineert een lage prijs met een goede isolatiewaarde, een gebruikelijke installatiemethode en een beperkte milieu-impact. Een ideale optie tussen prijs en kwaliteit."
+          biobasedAlternativeIndex: 2
+      - label: 2. EPS-platen
+        result: |
+          2. EPS-platen
+          
+          EPS-platen zijn licht, vormvast en eenvoudig te monteren, waardoor de uitvoering gemakkelijk is. Ze bieden een prima isolatiewaarde, maar de milieu-impact is relatief hoog. Een praktische keuze maar minder duurzaam.
+        card:
+          price: "€184,75/m²"
+          pros:
+            - "Iets duurder"
+            - "Eenvoudige installatie"
+          cons:
+            - "Iets mindere isolatiewaarde"
+            - "Niet milieuvriendelijk"
+          description: "EPS-platen zijn licht, vormvast en eenvoudig te monteren, waardoor de uitvoering gemakkelijk is. Ze bieden een prima isolatiewaarde, maar de milieu-impact is relatief hoog. Een praktische keuze maar minder duurzaam."
+          biobasedAlternativeIndex: 2
+      - label: 3. Houtvezel
+        result: |
+          3. Houtvezel: Milieuvriendelijk maar prijzig
+          
+          Houtvezel heeft een lage milieu-impact, maar is nog aan de dure kant. De installatie is arbeidsintensiever vanwege dampopen werken. Een duurzaam alternatief, maar minder gunstig in prijs en uitvoering.
+        card:
+          price: "€259,75/m²"
+          pros:
+            - "Zeer milieuvriendelijk"
+          cons:
+            - "Relatief duur"
+            - "Iets mindere isolatiewaarde"
+            - "Arbeidsintensievere installatie"
+          description: "Houtvezel heeft een lage milieu-impact, maar is nog aan de dure kant. De installatie is arbeidsintensiever vanwege dampopen werken. Een duurzaam alternatief, maar minder gunstig in prijs en uitvoering."
+
+  - id: overweeg-binnengevelisolatie
+    title: Overweeg binnengevelisolatie
+    question: Overweeg binnengevelisolatie
+    options:
+      - label: Is binnengevelisolatie praktisch uitvoerbaar?
+        nextId: is-binnengevelisolatie-praktisch-uitvoerbaar
+
+  - id: is-binnengevelisolatie-praktisch-uitvoerbaar
+    title: Is binnengevelisolatie praktisch uitvoerbaar?
+    question: Is binnengevelisolatie praktisch uitvoerbaar?
+    note: "Praktisch uitvoerbaar betekent: Voldoende ruimte binnenzijde, Geen/weinig obstakels aanwezig, Geen vochtproblemen"
+    options:
+      - label: Ja
+        nextId: wil-je-woonruimte-opofferen
+      - label: Nee
+        result: Isoleer niet uw gevel, maar focus op ramen, vloer- en/of dakisolatie.
+
+  - id: wil-je-woonruimte-opofferen
+    title: Wilt u woonruimte opofferen om te isoleren?
+    question: Wilt u woonruimte opofferen om te isoleren?
+    options:
+      - label: Ja
+        nextId: binnenisolatie-opties
+      - label: Nee
+        result: Isoleer niet uw gevel, maar focus op ramen, vloer- en/of dakisolatie.
+
+  - id: binnenisolatie-opties
+    title: Binnenisolatie opties
+    question: Interessant, maar welke opties heb ik dan?
+    options:
+      - label: 1. Biobased
+        result: |
+          1. Biobased: Milieuvriendelijk en betaalbaar
+          
+          Biobased isoleren is zeer milieuvriendelijk en dankzij subsidies ook goedkoper. Er is wel een dikkere laag isolatiemateriaal nodig, wat iets meer woonruimte opoffert. Een milieuvriendelijke keuze met iets minder woonruimte.
+        card:
+          price: "€128,75/m²"
+          pros:
+            - "Vlaswol of houtvezel is goedkoper door subsidie"
+            - "Zeer milieuvriendelijk"
+          cons:
+            - "Iets lagere isolatiewaarde"
+            - "Dikkere isolatielaag nodig"
+          description: "Biobased isoleren is zeer milieuvriendelijk en dankzij subsidies ook goedkoper. Er is wel een dikkere laag isolatiemateriaal nodig, wat iets meer woonruimte opoffert. Een milieuvriendelijke keuze met iets minder woonruimte."
+      - label: 2. PIR
+        result: |
+          2. PIR: Goed isoleren met weinig dikte
+          
+          PIR biedt een hoge isolatiewaarde bij geringe dikte en is daardoor aantrekkelijk voor situaties met beperkte ruimte. Het materiaal is echter duurder en minder duurzaam dan biobased alternatieven. Een uitstekende isolatie met minimale ruimte-inname.
+        card:
+          price: "€142,75/m²"
+          pros:
+            - "Uitstekende isolatiewaarde"
+            - "Dunne isolatielaag nodig"
+          cons:
+            - "Duurder"
+            - "Minder milieuvriendelijk dan biobased"
+          description: "PIR biedt een hoge isolatiewaarde bij geringe dikte en is daardoor aantrekkelijk voor situaties met beperkte ruimte. Het materiaal is echter duurder en minder duurzaam dan biobased alternatieven. Een uitstekende isolatie met minimale ruimte-inname."
+          biobasedAlternativeIndex: 0
+      - label: 3. Minerale wol
+        result: |
+          3. Minerale wol: Prijzig maar betrouwbaar
+          
+          Minerale wol blijft een veelgebruikt materiaal dankzij zijn bewezen prestaties. Het is iets duurder en vergt meer woonruimte dan PIR. Een veelgebruikte keuze met bewezen prestaties.
+        card:
+          price: "€143,75/m²"
+          pros:
+            - "Goede isolatiewaarde"
+          cons:
+            - "Duurder"
+            - "Dikkere isolatielaag nodig"
+            - "Minder milieuvriendelijk dan biobased"
+          description: "Minerale wol blijft een veelgebruikt materiaal dankzij zijn bewezen prestaties. Het is iets duurder en vergt meer woonruimte dan PIR. Een veelgebruikte keuze met bewezen prestaties."
+          biobasedAlternativeIndex: 0
