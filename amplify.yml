@@ -3,7 +3,13 @@ frontend:
   phases:
     preBuild:
       commands:
-        - npm ci
+        - |
+          if [ -f package-lock.json ]; then
+            npm ci
+          else
+            echo "Warning: package-lock.json not found, using npm install"
+            npm install
+          fi
     build:
       commands:
         - npm run build
