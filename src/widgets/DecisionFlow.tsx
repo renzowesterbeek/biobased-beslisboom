@@ -152,6 +152,26 @@ export function DecisionFlow({ definition }: { definition: DecisionFlowDefinitio
     }, 300);
   }
 
+  function handleShowBinnengevelisolatie() {
+    setIsTransitioning(true);
+    setTimeout(() => {
+      setResult(null);
+      setResultNodeId(null);
+      setResultOptionIndex(null);
+      setCurrentId('overweeg-binnengevelisolatie');
+      setPath(prev => {
+        // Find the index of 'is-er-een-bruikbare-spouw' and go from there
+        const spouwIndex = prev.indexOf('is-er-een-bruikbare-spouw');
+        if (spouwIndex >= 0) {
+          return prev.slice(0, spouwIndex + 1).concat('overweeg-binnengevelisolatie');
+        }
+        return [...prev, 'overweeg-binnengevelisolatie'];
+      });
+      setAnimationKey(prev => prev + 1);
+      setIsTransitioning(false);
+    }, 300);
+  }
+
   function handleShare() {
     if (!result) return;
     
@@ -340,7 +360,7 @@ export function DecisionFlow({ definition }: { definition: DecisionFlowDefinitio
           </div>
         </div>
 
-        {(hasBiobasedAlternative || resultNodeId === 'spouwmuurisolatie-opties') && (
+        {(hasBiobasedAlternative || resultNodeId === 'spouwmuurisolatie-opties' || resultNodeId === 'buitenisolatie-opties') && (
           <div style={{
             background: 'linear-gradient(135deg, #fff8e1 0%, #fffbf0 100%)',
             border: '2px solid #fdd835',
@@ -415,6 +435,38 @@ export function DecisionFlow({ definition }: { definition: DecisionFlowDefinitio
                 }}
               >
                 Benieuwd naar andere opties? Overweeg buitengevelisolatie
+              </button>
+            )}
+            {resultNodeId === 'buitenisolatie-opties' && (
+              <button
+                onClick={handleShowBinnengevelisolatie}
+                style={{
+                  padding: '12px 32px',
+                  borderRadius: '8px',
+                  border: '2px solid #04452e',
+                  background: '#ffffff',
+                  color: '#04452e',
+                  cursor: 'pointer',
+                  fontWeight: 600,
+                  fontSize: '15px',
+                  transition: 'all 0.2s ease',
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: 8,
+                  width: '100%',
+                  maxWidth: '400px',
+                  justifyContent: 'center'
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.background = '#daf7e0';
+                  e.currentTarget.style.borderColor = '#04452e';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.background = '#ffffff';
+                  e.currentTarget.style.borderColor = '#04452e';
+                }}
+              >
+                Benieuwd naar binnengevelisolatie?
               </button>
             )}
           </div>
@@ -679,23 +731,26 @@ export function DecisionFlow({ definition }: { definition: DecisionFlowDefinitio
           {current.options.map((opt, idx) => (
             <div key={`${currentId}-${idx}`} data-option-index={idx} style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
               <button
-                onClick={() => handleChoose(idx)}
+                onClick={() => !opt.disabled && handleChoose(idx)}
+                disabled={opt.disabled}
                 style={{
                   textAlign: 'left',
                   padding: '16px 20px',
                   borderRadius: 8,
                   border: isStartNode ? 'none' : '1px solid #daf7e0',
-                  background: isStartNode ? '#04452e' : '#ffffff',
-                  color: isStartNode ? '#daf7e0' : '#04452e',
-                  cursor: 'pointer',
+                  background: opt.disabled ? '#f5f5f5' : (isStartNode ? '#04452e' : '#ffffff'),
+                  color: opt.disabled ? '#999999' : (isStartNode ? '#daf7e0' : '#04452e'),
+                  cursor: opt.disabled ? 'not-allowed' : 'pointer',
                   transition: 'all 0.2s ease',
                   fontSize: '17px',
                   fontWeight: 500,
                   animation: isTransitioning ? 'none' : `fadeInSlide ${(0.5 + idx * 0.1).toFixed(1)}s ease-out`,
                   animationFillMode: 'both',
-                  width: '100%'
+                  width: '100%',
+                  opacity: opt.disabled ? 0.6 : 1
                 }}
                 onMouseEnter={(e) => { 
+                  if (opt.disabled) return;
                   if (!isStartNode) {
                     e.currentTarget.style.background = '#daf7e0';
                     e.currentTarget.style.borderColor = '#04452e';
@@ -706,6 +761,7 @@ export function DecisionFlow({ definition }: { definition: DecisionFlowDefinitio
                   }
                 }}
                 onMouseLeave={(e) => { 
+                  if (opt.disabled) return;
                   if (!isStartNode) {
                     e.currentTarget.style.background = '#ffffff';
                     e.currentTarget.style.borderColor = '#daf7e0';

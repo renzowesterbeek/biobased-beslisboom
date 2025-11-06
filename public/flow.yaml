@@ -13,14 +13,22 @@ nodes:
     question: ""
     options:
       - label: Mijn VvE wil verduurzamen
-        nextId: gevelisolatie-overwegen
+        nextId: kies-verduurzamingsmaatregel
 
-  - id: gevelisolatie-overwegen
-    title: Gevel isolatie
-    question: Ik denk aan gevelisolatie, wat nu?
+  - id: kies-verduurzamingsmaatregel
+    title: Kies een verduurzamingsmaatregel
+    question: Waar wilt u beginnen met verduurzamen?
     options:
-      - label: Laat de mogelijkheden zien
+      - label: Gevel
         nextId: is-er-een-bruikbare-spouw
+      - label: Dak
+        disabled: true
+      - label: Vloer
+        disabled: true
+      - label: Kozijnen
+        disabled: true
+      - label: Installaties
+        disabled: true
 
   - id: is-er-een-bruikbare-spouw
     title: Is er een bruikbare spouw?

@@ -12,6 +12,7 @@ export type DecisionNodeOption = {
   nextId?: string;
   result?: string;
   card?: OptionCard;
+  disabled?: boolean;
 };
 
 export type DecisionNode = {
