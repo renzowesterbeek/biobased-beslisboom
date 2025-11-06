@@ -19,13 +19,13 @@ nodes:
     title: Gevel isolatie
     question: Ik denk aan gevelisolatie, wat nu?
     options:
-      - label: Ga door
+      - label: Laat de mogelijkheden zien
         nextId: is-er-een-bruikbare-spouw
 
   - id: is-er-een-bruikbare-spouw
     title: Is er een bruikbare spouw?
-    question: Is er een bruikbare spouw?
-    note: "Een bruikbare spouw betekent: >50mm, Droog en schoon, Weinig onderbrekingen"
+    question: Voor veel VvE's is spouwmuurisolatie de eerste stap bij het nemen van energiebesparende maatregelen. Spouwmuurisolatie is namelijk de goedkoopste en snelste manier om muren te isoleren. Het vult de ruimte tussen je binnenmuur en buitenmuur met isolerend materiaal. Dit is vooral interessant voor woningen die tussen 1920 en 1975 zijn gebouwd, want die woningen zijn vaak niet goed geïsoleerd.
+    note: "Een bruikbare spouw betekent: Groter dan 4 centimeter, Droog en schoon, Weinig onderbrekingen. Een specialist kan beoordelen of de spouw bruikbaar is."
     options:
       - label: Ja
         nextId: overweeg-spouwmuurisolatie
@@ -35,6 +35,7 @@ nodes:
   - id: overweeg-spouwmuurisolatie
     title: Overweeg Spouwmuurisolatie
     question: Overweeg Spouwmuurisolatie
+    note: ""
     options:
       - label: Interessant, maar welke opties heb ik dan?
         nextId: spouwmuurisolatie-opties
@@ -50,6 +51,7 @@ nodes:
           Minerale wol scoort in deze vergelijking het best. Het combineert een lage prijs met een goede isolatiewaarde, een gebruikelijke installatiemethode en een beperkte milieu-impact. Een ideale optie tussen prijs en kwaliteit.
         card:
           price: "€8,75/m²"
+          rdValue: "Rd: 1,56 m²·K/W (bij 50mm)"
           pros:
             - "Goedkoop"
             - "Goede isolatiewaarde"
@@ -64,6 +66,7 @@ nodes:
           EPS-parels zijn een goede optie met een makkelijke installatiewijze die de spouw homogeen vult. EPS-parels zijn minder milieuvriendelijk dan minerale wol of kurk. Een goede optie voor installatiegemak.
         card:
           price: "€12,75/m²"
+          rdValue: "Rd: 1,32 m²·K/W (bij 50mm)"
           pros:
             - "Relatief goedkoop"
             - "Zeer eenvoudige installatie"
@@ -79,6 +82,7 @@ nodes:
           Kurk is een ecologisch materiaal met goede eigenschappen, maar het is minder gangbaar, duurder en heeft een lagere isolatiewaarde dan gebruikelijke alternatieven. Een duurzaam alternatief, maar nog in ontwikkelfase.
         card:
           price: "€15,25/m²"
+          rdValue: "Rd: 1,19 m²·K/W (bij 50mm)"
           pros:
             - "Zeer milieuvriendelijk"
           cons:

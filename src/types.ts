@@ -1,5 +1,6 @@
 export type OptionCard = {
   price?: string;
+  rdValue?: string;
   pros?: string[];
   cons?: string[];
   description?: string;

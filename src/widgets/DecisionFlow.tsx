@@ -132,6 +132,26 @@ export function DecisionFlow({ definition }: { definition: DecisionFlowDefinitio
     }
   }
 
+  function handleShowBuitengevelisolatie() {
+    setIsTransitioning(true);
+    setTimeout(() => {
+      setResult(null);
+      setResultNodeId(null);
+      setResultOptionIndex(null);
+      setCurrentId('overweeg-buitengevelisolatie');
+      setPath(prev => {
+        // Find the index of 'is-er-een-bruikbare-spouw' and go from there
+        const spouwIndex = prev.indexOf('is-er-een-bruikbare-spouw');
+        if (spouwIndex >= 0) {
+          return prev.slice(0, spouwIndex + 1).concat('overweeg-buitengevelisolatie');
+        }
+        return [...prev, 'overweeg-buitengevelisolatie'];
+      });
+      setAnimationKey(prev => prev + 1);
+      setIsTransitioning(false);
+    }, 300);
+  }
+
   function handleShare() {
     if (!result) return;
     
@@ -320,107 +340,83 @@ export function DecisionFlow({ definition }: { definition: DecisionFlowDefinitio
           </div>
         </div>
 
-        <div style={{
-          background: 'linear-gradient(135deg, #daf7e0 0%, #f0f9f4 100%)',
-          border: '2px solid #04452e',
-          padding: '32px',
-          borderRadius: '12px',
-          marginBottom: 32,
-          textAlign: 'center'
-        }}>
-          <h3 style={{
-            margin: '0 0 12px 0',
-            color: '#04452e',
-            fontSize: '20px',
-            fontWeight: 600
-          }}>
-            Wilt u hulp bij uw verduurzaming?
-          </h3>
-          <p style={{
-            margin: '0 0 24px 0',
-            color: '#2d4a3e',
-            fontSize: '16px',
-            lineHeight: 1.6
-          }}>
-            Creative City Solutions biedt volledig gesubsidieerde procesbegeleiding voor de verduurzaming van VvE's
-          </p>
-          <a
-            href="https://www.creativecitysolutions.com/afspraak"
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{
-              display: 'inline-block',
-              padding: '16px 40px',
-              borderRadius: '8px',
-              border: 'none',
-              background: '#04452e',
-              color: '#ffffff',
-              textDecoration: 'none',
-              cursor: 'pointer',
-              fontWeight: 600,
-              fontSize: '17px',
-              transition: 'all 0.2s ease',
-              boxShadow: '0 4px 12px rgba(4, 69, 46, 0.2)'
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.background = '#066a45';
-              e.currentTarget.style.transform = 'translateY(-2px)';
-              e.currentTarget.style.boxShadow = '0 6px 16px rgba(4, 69, 46, 0.3)';
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.background = '#04452e';
-              e.currentTarget.style.transform = 'translateY(0)';
-              e.currentTarget.style.boxShadow = '0 4px 12px rgba(4, 69, 46, 0.2)';
-            }}
-          >
-            Maak een afspraak →
-          </a>
-        </div>
-
-        {hasBiobasedAlternative && (
+        {(hasBiobasedAlternative || resultNodeId === 'spouwmuurisolatie-opties') && (
           <div style={{
             background: 'linear-gradient(135deg, #fff8e1 0%, #fffbf0 100%)',
             border: '2px solid #fdd835',
             padding: '24px',
             borderRadius: '12px',
             marginBottom: 24,
-            textAlign: 'center'
+            textAlign: 'center',
+            display: 'flex',
+            flexDirection: 'column',
+            gap: 12,
+            alignItems: 'center'
           }}>
-            <p style={{
-              margin: '0 0 16px 0',
-              color: '#04452e',
-              fontSize: '16px',
-              fontWeight: 500
-            }}>
-              Wilt u een milieuvriendelijker alternatief bekijken?
-            </p>
-            <button
-              onClick={handleShowBiobasedAlternative}
-              style={{
-                padding: '12px 32px',
-                borderRadius: '8px',
-                border: '2px solid #04452e',
-                background: '#ffffff',
-                color: '#04452e',
-                cursor: 'pointer',
-                fontWeight: 600,
-                fontSize: '15px',
-                transition: 'all 0.2s ease',
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: 8
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.background = '#daf7e0';
-                e.currentTarget.style.borderColor = '#04452e';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.background = '#ffffff';
-                e.currentTarget.style.borderColor = '#04452e';
-              }}
-            >
-              🌱 Bekijk milieuvriendelijk alternatief
-            </button>
+            {hasBiobasedAlternative && (
+              <button
+                onClick={handleShowBiobasedAlternative}
+                style={{
+                  padding: '12px 32px',
+                  borderRadius: '8px',
+                  border: '2px solid #04452e',
+                  background: '#ffffff',
+                  color: '#04452e',
+                  cursor: 'pointer',
+                  fontWeight: 600,
+                  fontSize: '15px',
+                  transition: 'all 0.2s ease',
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: 8,
+                  width: '100%',
+                  maxWidth: '400px',
+                  justifyContent: 'center'
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.background = '#daf7e0';
+                  e.currentTarget.style.borderColor = '#04452e';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.background = '#ffffff';
+                  e.currentTarget.style.borderColor = '#04452e';
+                }}
+              >
+                🌱 Bekijk milieuvriendelijk alternatief
+              </button>
+            )}
+            {resultNodeId === 'spouwmuurisolatie-opties' && (
+              <button
+                onClick={handleShowBuitengevelisolatie}
+                style={{
+                  padding: '12px 32px',
+                  borderRadius: '8px',
+                  border: '2px solid #04452e',
+                  background: '#ffffff',
+                  color: '#04452e',
+                  cursor: 'pointer',
+                  fontWeight: 600,
+                  fontSize: '15px',
+                  transition: 'all 0.2s ease',
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: 8,
+                  width: '100%',
+                  maxWidth: '400px',
+                  justifyContent: 'center'
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.background = '#daf7e0';
+                  e.currentTarget.style.borderColor = '#04452e';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.background = '#ffffff';
+                  e.currentTarget.style.borderColor = '#04452e';
+                }}
+              >
+                Benieuwd naar andere opties? Overweeg buitengevelisolatie
+              </button>
+            )}
           </div>
         )}
 
@@ -501,6 +497,63 @@ export function DecisionFlow({ definition }: { definition: DecisionFlowDefinitio
           >
             Opnieuw beginnen
           </button>
+        </div>
+
+        <div style={{
+          background: 'linear-gradient(135deg, #daf7e0 0%, #f0f9f4 100%)',
+          border: '2px solid #04452e',
+          padding: '32px',
+          borderRadius: '12px',
+          marginTop: 32,
+          textAlign: 'center'
+        }}>
+          <h3 style={{
+            margin: '0 0 12px 0',
+            color: '#04452e',
+            fontSize: '20px',
+            fontWeight: 600
+          }}>
+            Wilt u hulp bij uw verduurzaming?
+          </h3>
+          <p style={{
+            margin: '0 0 24px 0',
+            color: '#2d4a3e',
+            fontSize: '16px',
+            lineHeight: 1.6
+          }}>
+            Creative City Solutions biedt volledig gesubsidieerde procesbegeleiding voor de verduurzaming van VvE's
+          </p>
+          <a
+            href="https://www.creativecitysolutions.com/afspraak"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{
+              display: 'inline-block',
+              padding: '16px 40px',
+              borderRadius: '8px',
+              border: 'none',
+              background: '#04452e',
+              color: '#ffffff',
+              textDecoration: 'none',
+              cursor: 'pointer',
+              fontWeight: 600,
+              fontSize: '17px',
+              transition: 'all 0.2s ease',
+              boxShadow: '0 4px 12px rgba(4, 69, 46, 0.2)'
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.background = '#066a45';
+              e.currentTarget.style.transform = 'translateY(-2px)';
+              e.currentTarget.style.boxShadow = '0 6px 16px rgba(4, 69, 46, 0.3)';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.background = '#04452e';
+              e.currentTarget.style.transform = 'translateY(0)';
+              e.currentTarget.style.boxShadow = '0 4px 12px rgba(4, 69, 46, 0.2)';
+            }}
+          >
+            Maak een afspraak →
+          </a>
         </div>
       </div>
     );
@@ -680,9 +733,30 @@ export function DecisionFlow({ definition }: { definition: DecisionFlowDefinitio
                       fontSize: '20px',
                       fontWeight: 600,
                       color: '#04452e',
-                      marginBottom: 16
+                      marginBottom: opt.card.rdValue ? 8 : 16
                     }}>
                       {opt.card.price}
+                    </div>
+                  )}
+                  {opt.card.rdValue && (
+                    <div style={{
+                      fontSize: '16px',
+                      fontWeight: 500,
+                      color: '#04452e',
+                      marginBottom: 16,
+                      opacity: 0.8
+                    }}>
+                      {opt.card.rdValue}
+                    </div>
+                  )}
+                  {opt.card.description && (
+                    <div style={{
+                      marginBottom: 16,
+                      color: '#04452e',
+                      lineHeight: 1.6,
+                      fontSize: '14px'
+                    }}>
+                      {opt.card.description}
                     </div>
                   )}
                   <div style={{ display: 'flex', gap: 24, flexWrap: 'wrap' }}>
@@ -731,18 +805,6 @@ export function DecisionFlow({ definition }: { definition: DecisionFlowDefinitio
                       </div>
                     )}
                   </div>
-                  {opt.card.description && (
-                    <div style={{
-                      marginTop: 16,
-                      paddingTop: 16,
-                      borderTop: '1px solid #fdd835',
-                      color: '#04452e',
-                      lineHeight: 1.6,
-                      fontSize: '14px'
-                    }}>
-                      {opt.card.description}
-                    </div>
-                  )}
                 </div>
               )}
             </div>
