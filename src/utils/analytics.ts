@@ -21,9 +21,13 @@ export function initAnalytics() {
   }
 
   // Initialize dataLayer
-  window.dataLayer = window.dataLayer || [];
+  if (!window.dataLayer) {
+    window.dataLayer = [];
+  }
   window.gtag = function() {
-    window.dataLayer.push(arguments);
+    if (window.dataLayer) {
+      window.dataLayer.push(arguments);
+    }
   };
   window.gtag('js', new Date());
   window.gtag('config', GA_MEASUREMENT_ID, {
