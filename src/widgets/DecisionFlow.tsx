@@ -1,5 +1,6 @@
 import React, { useMemo, useState } from 'react';
 import { DecisionFlowDefinition, DecisionNode } from '../types';
+import { analytics } from '../utils/analytics';
 
 export function DecisionFlow({ definition }: { definition: DecisionFlowDefinition }): JSX.Element {
   const idToNode = useMemo(() => {
@@ -39,6 +40,10 @@ export function DecisionFlow({ definition }: { definition: DecisionFlowDefinitio
     if (!currentNode) return;
     const option = currentNode.options[optionIndex];
     if (!option) return;
+    
+    // Track option selection
+    analytics.trackOptionSelect(currentId, option.label, currentNode.title);
+    
     if (option.result) {
       setIsTransitioning(true);
       setTimeout(() => {
@@ -46,6 +51,8 @@ export function DecisionFlow({ definition }: { definition: DecisionFlowDefinitio
         setResultNodeId(currentId);
         setResultOptionIndex(optionIndex);
         setIsTransitioning(false);
+        // Track result reached
+        analytics.trackResult(currentId, option.label);
       }, 300);
       return;
     }
@@ -70,6 +77,8 @@ export function DecisionFlow({ definition }: { definition: DecisionFlowDefinitio
       newPath.pop();
       const previousId = newPath[newPath.length - 1];
       if (previousId) {
+        // Track back navigation
+        analytics.trackBack(currentId, previousId);
         setCurrentId(previousId);
         setPath(newPath);
         setAnimationKey(prev => prev + 1);
@@ -79,6 +88,7 @@ export function DecisionFlow({ definition }: { definition: DecisionFlowDefinitio
   }
 
   function handleRestart() {
+    analytics.trackRestart();
     setIsTransitioning(true);
     setTimeout(() => {
       setResult(null);
@@ -98,6 +108,7 @@ export function DecisionFlow({ definition }: { definition: DecisionFlowDefinitio
       if (node) {
         const selectedOption = node.options[resultOptionIndex];
         if (selectedOption.card && selectedOption.card.biobasedAlternativeIndex !== undefined) {
+          analytics.trackAlternativeNavigation(resultNodeId, resultNodeId, 'biobased');
           setIsTransitioning(true);
           setTimeout(() => {
             setResult(null);
@@ -133,6 +144,9 @@ export function DecisionFlow({ definition }: { definition: DecisionFlowDefinitio
   }
 
   function handleShowBuitengevelisolatie() {
+    if (resultNodeId) {
+      analytics.trackAlternativeNavigation(resultNodeId, 'overweeg-buitengevelisolatie', 'buitengevelisolatie');
+    }
     setIsTransitioning(true);
     setTimeout(() => {
       setResult(null);
@@ -153,6 +167,9 @@ export function DecisionFlow({ definition }: { definition: DecisionFlowDefinitio
   }
 
   function handleShowBinnengevelisolatie() {
+    if (resultNodeId) {
+      analytics.trackAlternativeNavigation(resultNodeId, 'overweeg-binnengevelisolatie', 'binnengevelisolatie');
+    }
     setIsTransitioning(true);
     setTimeout(() => {
       setResult(null);
@@ -182,12 +199,16 @@ export function DecisionFlow({ definition }: { definition: DecisionFlowDefinitio
         title: definition.title || 'Beslisboom Resultaat',
         text: result,
         url: window.location.href
+      }).then(() => {
+        analytics.trackShare('native_share');
       }).catch(() => {
         // Fallback to clipboard if share fails
         copyToClipboard(textToShare);
+        analytics.trackShare('clipboard');
       });
     } else {
       copyToClipboard(textToShare);
+      analytics.trackShare('clipboard');
     }
   }
 
@@ -579,6 +600,7 @@ export function DecisionFlow({ definition }: { definition: DecisionFlowDefinitio
             href="https://www.creativecitysolutions.com/afspraak"
             target="_blank"
             rel="noopener noreferrer"
+            onClick={() => analytics.trackCTAClick('afspraak', 'Maak een afspraak')}
             style={{
               display: 'inline-block',
               padding: '16px 40px',

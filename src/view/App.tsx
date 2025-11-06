@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { DecisionFlow } from '../widgets/DecisionFlow';
 import { loadYamlFlow } from '../utils/yamlLoader';
 import { DecisionFlowDefinition } from '../types';
+import { initAnalytics, analytics } from '../utils/analytics';
 
 export function App(): JSX.Element {
   const [flow, setFlow] = useState<DecisionFlowDefinition | null>(null);
@@ -9,12 +10,17 @@ export function App(): JSX.Element {
   const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
+    // Initialize Google Analytics
+    initAnalytics();
+    
     let isMounted = true;
     loadYamlFlow('/flow.yaml')
       .then((def) => {
         if (isMounted) {
           setFlow(def);
           setLoading(false);
+          // Track flow start when loaded
+          analytics.trackFlowStart();
         }
       })
       .catch((e: unknown) => {

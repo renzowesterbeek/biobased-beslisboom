@@ -42,11 +42,23 @@ This guide explains how to deploy the Biobased Beslisboom Webtool to AWS Amplify
    - Review the configuration
    - Click "Save and deploy"
 
-### Step 3: Configure Environment Variables (if needed)
+### Step 3: Configure Environment Variables
 
-If you have any environment variables:
-1. Go to App settings → Environment variables
-2. Add your variables
+**Required for Google Analytics:**
+
+1. Go to your Amplify app in the AWS Console
+2. Navigate to **App settings** → **Environment variables**
+3. Click **Manage variables**
+4. Add the following variable:
+   - **Key**: `VITE_GA_MEASUREMENT_ID`
+   - **Value**: `G-MZZ88M6MGW`
+   - **Apply to**: Select all branches/environments where you want analytics active
+5. Click **Save**
+6. **Important**: After adding the variable, you need to **redeploy** your app:
+   - Go to the **Deployments** tab
+   - Click **Redeploy this version** (or trigger a new deployment by pushing to your branch)
+
+**Note**: The Measurement ID is also hardcoded as a fallback in the code, so analytics will work even without the environment variable, but it's best practice to use the environment variable for flexibility.
 
 ### Step 4: Custom Domain (Optional)
 
